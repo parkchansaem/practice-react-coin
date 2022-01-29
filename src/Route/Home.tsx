@@ -58,7 +58,15 @@ const Overlay = styled.div`
   background-color: rgba(0, 0, 0, 0.8);
   position: absolute;
 `;
-
+const DetailBtn = styled.div`
+  position: absolute;
+  left: 15px;
+  top: 15px;
+  display: grid;
+  & {
+    margin-bottom: 15px;
+  }
+`;
 interface ICoin {
   id: number;
   name: string;
@@ -74,7 +82,7 @@ function Home() {
     navigate(`/${coinId}`);
   };
   const overlayBack = () => {
-    navigate(-1);
+    navigate("/");
   };
   return (
     <>
@@ -108,10 +116,17 @@ function Home() {
                     coinId={animationMatch.params.coinId + ""}
                     name={animationMatch.pathname}
                   />
-                  <Link to="/">Home</Link>
-                  <Link to={`${animationMatch.params.coinId}/chart`}>
-                    chart
-                  </Link>
+                  <Price coinId={animationMatch.params.coinId + ""} />
+                  <DetailBtn>
+                    {" "}
+                    <Link to="/">Home</Link>
+                    <Link to={`${animationMatch.params.coinId}/chart`}>
+                      chart
+                    </Link>
+                    <Link to={`${animationMatch.params.coinId}/price`}>
+                      price
+                    </Link>
+                  </DetailBtn>
                 </Detailwindow>
               </>
             ) : null}

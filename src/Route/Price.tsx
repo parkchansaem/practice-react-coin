@@ -1,4 +1,5 @@
 import { useQuery } from "react-query";
+import { useMatch } from "react-router";
 import styled, { keyframes } from "styled-components";
 import { priceFetch } from "../api";
 
@@ -57,68 +58,82 @@ function Check(value: number | undefined) {
   }
 }
 function Price({ coinId }: Chartprops) {
+  const priceMAtch = useMatch("/:coinId/price");
   const { isLoading, data } = useQuery<Iprice>(["ohicv", coinId], () =>
     priceFetch(coinId)
   );
 
   return (
     <div>
-      {isLoading ? (
-        "loading.."
-      ) : (
-        <Container>
-          <InfoBar>
-            Current Prices :
-            <Text isPositive={Check(data?.quotes.USD.price) === true}>
-              ${data?.quotes.USD.price.toFixed(2)}
-            </Text>
-          </InfoBar>
-          <InfoBar>
-            Change rate (last:1h):{" "}
-            <Text
-              isPositive={Check(data?.quotes.USD.percent_change_1h) === true}
-            >
-              {data?.quotes.USD.percent_change_1h}%
-            </Text>
-          </InfoBar>
-          <InfoBar>
-            Change rate (last:24h):{" "}
-            <Text
-              isPositive={Check(data?.quotes.USD.percent_change_24h) === true}
-            >
-              {data?.quotes.USD.percent_change_24h}%
-            </Text>
-          </InfoBar>
-          <InfoBar>
-            Change rate (last:7d):{" "}
-            <Text
-              isPositive={Check(data?.quotes.USD.percent_change_7d) === true}
-            >
-              {data?.quotes.USD.percent_change_7d}%
-            </Text>
-          </InfoBar>
-          <InfoBar>
-            Change rate (last:30d):{" "}
-            <Text
-              isPositive={Check(data?.quotes.USD.percent_change_30d) === true}
-            >
-              {data?.quotes.USD.percent_change_30d}%
-            </Text>
-          </InfoBar>
-          <InfoBar>
-            Highest Price:{" "}
-            <Text isPositive={true}>
-              {data?.quotes.USD.ath_date.slice(0, 10)}
-            </Text>
-          </InfoBar>
-          <InfoBar>
-            Highest Date:{" "}
-            <Text isPositive={Check(data?.quotes.USD.ath_price) === true}>
-              ${data?.quotes.USD.ath_price.toFixed(2)}
-            </Text>
-          </InfoBar>
-        </Container>
-      )}
+      {priceMAtch ? (
+        <>
+          {" "}
+          {isLoading ? (
+            "loading.."
+          ) : (
+            <Container>
+              <InfoBar>
+                Current Prices :
+                <Text isPositive={Check(data?.quotes.USD.price) === true}>
+                  ${data?.quotes.USD.price.toFixed(2)}
+                </Text>
+              </InfoBar>
+              <InfoBar>
+                Change rate (last:1h):{" "}
+                <Text
+                  isPositive={
+                    Check(data?.quotes.USD.percent_change_1h) === true
+                  }
+                >
+                  {data?.quotes.USD.percent_change_1h}%
+                </Text>
+              </InfoBar>
+              <InfoBar>
+                Change rate (last:24h):{" "}
+                <Text
+                  isPositive={
+                    Check(data?.quotes.USD.percent_change_24h) === true
+                  }
+                >
+                  {data?.quotes.USD.percent_change_24h}%
+                </Text>
+              </InfoBar>
+              <InfoBar>
+                Change rate (last:7d):{" "}
+                <Text
+                  isPositive={
+                    Check(data?.quotes.USD.percent_change_7d) === true
+                  }
+                >
+                  {data?.quotes.USD.percent_change_7d}%
+                </Text>
+              </InfoBar>
+              <InfoBar>
+                Change rate (last:30d):{" "}
+                <Text
+                  isPositive={
+                    Check(data?.quotes.USD.percent_change_30d) === true
+                  }
+                >
+                  {data?.quotes.USD.percent_change_30d}%
+                </Text>
+              </InfoBar>
+              <InfoBar>
+                Highest Price:{" "}
+                <Text isPositive={true}>
+                  {data?.quotes.USD.ath_date.slice(0, 10)}
+                </Text>
+              </InfoBar>
+              <InfoBar>
+                Highest Date:{" "}
+                <Text isPositive={Check(data?.quotes.USD.ath_price) === true}>
+                  ${data?.quotes.USD.ath_price.toFixed(2)}
+                </Text>
+              </InfoBar>
+            </Container>
+          )}
+        </>
+      ) : null}
     </div>
   );
 }
