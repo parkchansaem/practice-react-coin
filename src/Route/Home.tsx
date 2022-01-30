@@ -63,9 +63,23 @@ const DetailBtn = styled.div`
   left: 15px;
   top: 15px;
   display: grid;
-  & {
-    margin-bottom: 15px;
-  }
+  background-color: gainsboro;
+  border-radius: 10px;
+  padding: 5px;
+`;
+const Btn = styled.div`
+  border-radius: 3px;
+  font-size: 18px;
+  margin-bottom: 5px;
+  position: relative;
+`;
+const Circle = styled(motion.div)`
+  width: 5px;
+  height: 5px;
+  border-radius: 5px;
+  position: absolute;
+  right: 20px;
+  background-color: black;
 `;
 interface ICoin {
   id: number;
@@ -76,6 +90,8 @@ interface ICoin {
 function Home() {
   const navigate = useNavigate();
   const animationMatch = useMatch("/:coinId/*");
+  const chartMatch = useMatch("/:coinId/chart");
+  const priceMAtch = useMatch("/:coinId/price");
   const { data, isLoading } = useQuery<ICoin[]>("coin", getCoindata);
   console.log(data?.slice(0, 5));
   const onclick = (coinId: string) => {
@@ -118,14 +134,21 @@ function Home() {
                   />
                   <Price coinId={animationMatch.params.coinId + ""} />
                   <DetailBtn>
-                    {" "}
-                    <Link to="/">Home</Link>
-                    <Link to={`${animationMatch.params.coinId}/chart`}>
-                      chart
-                    </Link>
-                    <Link to={`${animationMatch.params.coinId}/price`}>
-                      price
-                    </Link>
+                    <Btn>
+                      <Link to="/">home</Link>
+                    </Btn>
+                    <Btn>
+                      <Link to={`${animationMatch.params.coinId}/chart`}>
+                        chart
+                      </Link>
+                      {chartMatch ? <Circle layoutId="circle"></Circle> : null}
+                    </Btn>
+                    <Btn>
+                      <Link to={`${animationMatch.params.coinId}/price`}>
+                        price
+                      </Link>
+                      {priceMAtch ? <Circle layoutId="circle"></Circle> : null}
+                    </Btn>
                   </DetailBtn>
                 </Detailwindow>
               </>
