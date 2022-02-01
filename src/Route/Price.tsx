@@ -7,20 +7,7 @@ const Container = styled.div`
   max-width: 480px;
   margin: 0 auto;
 `;
-const comeupAnimation = keyframes`
-  0% {
-    transform: none;
-    opacity: 0;
-  }
-  1% {
-    transform: translateY(-5px);
-    opacity: 0;
-  }
-  100% {
-    transform: none;
-    opacity: 1;
-  }
-`;
+
 const InfoBar = styled.div`
   display: flex;
   justify-content: space-between;
@@ -29,7 +16,6 @@ const InfoBar = styled.div`
   border-radius: 10px;
   margin-bottom: 20px;
   opacity: 0;
-  animation: ${comeupAnimation} 0.5s linear forwards;
 `;
 const Text = styled.h3<{ isPositive?: Boolean }>`
   font-size: 20px;

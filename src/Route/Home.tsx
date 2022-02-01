@@ -103,7 +103,7 @@ function Home() {
   return (
     <>
       {isLoading ? (
-        <span>Loading</span>
+        <span>Loading...</span>
       ) : (
         <Wrapper>
           <AnimatePresence>
